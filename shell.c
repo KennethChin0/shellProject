@@ -1,24 +1,34 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
-void main(int argc, char *argv[]){
-	int i;
 
-	if (argc < 2){
-		printf("no arg\n");
-		exit(1);
-	}
-
-	for(int i=1; i<argc; i++){
-		int pid = fork();
-		if (pid < 0){
-			perror("fork failed");
-			exit(1);
-		}
-		else if (pid == 0){
-			printf("%s " , argv[i]);
-			printf("\n");
-			execv(argv[0], argv);
-		}
+char **parse_args(char* line) {
+  char **arg = malloc(6 * sizeof(char*));
+  char *curr = line;
+  int i = 0;
+  while (curr != NULL) {
+    arg[i++] = strsep(&curr, ";");
+  }
+  arg[i] = NULL;
+  return arg;
 }
 
+int main(){
+  char input[512];
+  fgets(input, sizeof(input)-1, stdin);
+  char ** args = parse_args(input);
+  int i =0;
+  while(args[i]){
+    if (strcmp(args[i], "exit") ==0) {
+      printf("here");
+      return 0;
+    }
+    // printf("%s\n", args[i] );
+      i++;
+  }
+  return 0;
+}
