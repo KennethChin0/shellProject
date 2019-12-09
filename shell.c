@@ -1,34 +1,49 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
-#include <sys/wait.h>
-#include <unistd.h>
+#include "shell.h"
 
-
-char **parse_args(char* line) {
-  char **arg = malloc(6 * sizeof(char*));
-  char *curr = line;
+char** strip_args(char* line){
   int i = 0;
-  while (curr != NULL) {
-    arg[i++] = strsep(&curr, ";");
+  while(line != NULL){
+    if(line[i] == '\n'){
+      line[i] == '\0';
+    }
   }
-  arg[i] = NULL;
-  return arg;
+  return 0;
 }
 
-int main(){
-  char input[512];
-  fgets(input, sizeof(input)-1, stdin);
-  char ** args = parse_args(input);
-  int i =0;
-  while(args[i]){
-    if (strcmp(args[i], "exit") ==0) {
-      printf("here");
-      return 0;
+int count(char* line){ // count the number of delimiters from a given argument
+  int num = 1;
+  int i;
+  for(i = 0; line[i] != '\0'; i++){
+    if(line[i] == ';'){
+      num++;
     }
-    // printf("%s\n", args[i] );
-      i++;
   }
+  return num;
+}
+
+char **parse_args(char* line, char delim) {
+  char **args = malloc(count(line) * sizeof(char*));
+  char *buff = line;
+  int i = 0;
+  while (buff != NULL) {
+    args[i++] = strsep(&buff, args[0]);
+  }
+  args[i] = NULL;
+  return args;
+}
+
+int exec_cmd(char *cmd){
+  char **args = parse_args(cmd, ';');
+  if (fork() == 0){
+    if(execvp(args[0], args) == -1){
+      printf("incorrect command");
+    }
+    free(args);
+    exit(0);
+  }
+  else{
+    wait(0);
+  }
+  free(args);
   return 0;
 }
