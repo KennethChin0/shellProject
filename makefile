@@ -1,8 +1,11 @@
-all: shell.o
-	gcc -o program shell.o
+all: main.o shell.o
+	gcc -o program main.o shell.o
 
-shell.o: shell.c
-	gcc -c shell.c
+main.o: main.c shell.h
+	gcc -c -g main.c
+
+shell.o: shell.c shell.h
+	gcc -c -g shell.c
 
 run:
 	./program
