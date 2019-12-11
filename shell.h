@@ -8,8 +8,11 @@
 
 char** strip_args(char* line);
 
-int count(char* line);
+int count(char* line, char * c);
 
-char **parse_args(char* line, char delim);
+
+char **parse_args(char* line, char * delim);
 
 int exec_cmd(char *cmd);
+
+// char *erase(char *p, char * c);
