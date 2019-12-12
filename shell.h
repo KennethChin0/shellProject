@@ -15,4 +15,9 @@ char **parse_args(char* line, char * delim);
 
 int exec_cmd(char *cmd);
 
+int find_redirect(char * line);
+
+int output(char * line);
+
+
 // char *erase(char *p, char * c);

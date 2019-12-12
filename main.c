@@ -19,30 +19,53 @@ int main(){
     char ** args = parse_args(input, ";");
     int i = 0;
   while(args[i]){
-    // printf("%s\n", args[i] );
+    int redirect = find_redirect(args[i]);
+    // printf("%d\n",  redirect);
+    //stout
+    if (redirect == 1) {
+      printf("stdout\n");
+      output(args[i]);
+    }
+    if (redirect == 2) {
+      printf("stdin\n");
+    }
+    if (redirect == 3) {
+      printf("pipe\n");
+    }
+    if (redirect == 0) {
     char ** command = parse_args(args[i], " ");
     if (strcmp(command[0], "exit") == 0) {
-      // printf("here");
       return 0;
     }
-    // printf("adsfasdf%s\n", command[0] );
-    // free(command);
-    // i++;
-
+    if (strcmp(command[0], "cd") == 0) {
+      if (command[2] != NULL){
+        printf("Syntax error: cd <filepath> \n" );
+      }
+      else{
+        chdir(command[1]);
+        if (errno){
+          printf("%s\n", strerror(errno));
+          errno = 0;
+        }
+      }
+    }
+    else {
     int result = fork();
     if (result) {
         int status;
         wait(&status);
       } else {
-        // printf("adsf\n" );
         execvp(command[0], command);
         if (errno) {
           printf("%s: command not found\n", command[0]);
           return 0;
        }
       }
-      i++;
     }
+    // i++;
+  }
+  i++;
+}
     free(args);
   }
 
