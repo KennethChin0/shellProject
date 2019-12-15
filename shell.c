@@ -88,7 +88,6 @@ int inputt(char * line){
   close(fd);
   return 1;
 }
-
 int mypipe (char * line) {
   char ** command = parse_args(line, "|");
   char ** left = parse_args(command[0], " ");
@@ -120,8 +119,6 @@ int mypipe (char * line) {
     close(pd[1]);
     exit(0);
   }
-  //dup2(backup,0);
-  //dup2(backup2,1);
   return 1;
 }
 

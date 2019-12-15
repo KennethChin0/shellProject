@@ -46,8 +46,13 @@ int main(){
     }
 
     if (redirect == 3) {
-      printf("pipe\n");
-      mypipe(args[i]);
+      int result = fork();
+      if (result) {
+          int status;
+          wait(&status);
+        } else {
+          mypipe(args[i]);
+        }
     }
 
     if (redirect == 0) {
