@@ -35,12 +35,19 @@ int main(){
     }
 
     if (redirect == 2) {
-      printf("stdin\n");
-      inputt(args[i]);
+      int result = fork();
+      if (result) {
+          int status;
+          wait(&status);
+        } else {
+          inputt(args[i]);
+        }
+
     }
-    
+
     if (redirect == 3) {
       printf("pipe\n");
+      mypipe(args[i]);
     }
 
     if (redirect == 0) {

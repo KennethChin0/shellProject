@@ -21,6 +21,6 @@ int output(char * line);
 
 int inputt(char * line);
 
-
+int mypipe (char * line) ;
 
 // char *erase(char *p, char * c);
