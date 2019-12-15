@@ -22,16 +22,27 @@ int main(){
     int redirect = find_redirect(args[i]);
     // printf("%d\n",  redirect);
     //stout
-    if (redirect == 1) {
-      printf("stdout\n");
-      output(args[i]);
+
+    if(redirect == 1){
+      int result = fork();
+      if (result) {
+          int status;
+          wait(&status);
+        } else {
+          output(args[i]);
+        }
+
     }
+
     if (redirect == 2) {
       printf("stdin\n");
+      inputt(args[i]);
     }
+    
     if (redirect == 3) {
       printf("pipe\n");
     }
+
     if (redirect == 0) {
     char ** command = parse_args(args[i], " ");
     if (strcmp(command[0], "exit") == 0) {

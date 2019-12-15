@@ -76,6 +76,18 @@ int output(char * line){
   return 1;
 }
 
+int inputt(char * line){
+  char ** command = parse_args(line, "<");
+  int fd;
+  char ** left = parse_args(command[0], " ");
+  char ** right = parse_args(command[1], " ");
+  fd = open(right[0], O_RDONLY, 0644);
+  dup(STDOUT_FILENO);
+  dup2(fd, STDOUT_FILENO);
+  execvp(left[0], left);
+  close(fd);
+  return 1;
+}
 
 // int exec_cmd(char *cmd){
 //   // char **args = parse_args(cmd, ';');

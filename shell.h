@@ -19,5 +19,8 @@ int find_redirect(char * line);
 
 int output(char * line);
 
+int inputt(char * line);
+
+
 
 // char *erase(char *p, char * c);
