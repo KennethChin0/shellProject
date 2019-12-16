@@ -1,6 +1,9 @@
 # shellProject
 Kenneth Chin and Minuk Kim, System Level Programming, PD 4, Project 1
 
+make run - tests commands from TEST_COMMANDS  
+make run2 - allows user to use the shell freely
+
 **We wrote a shell interface that**
 1. reads in a line with single command or multiple commands separated with delimiter ";"
 
@@ -16,9 +19,8 @@ Kenneth Chin and Minuk Kim, System Level Programming, PD 4, Project 1
 1. Supports multiple redirections ...
 2. ..
 
-# Limitations
-1. When running stdin from TEST_COMMANDS, the path won't be shown. 
-2. Unable to implement the ">>" redirection command that appends output to a files
+# Limitations 
+1. Unable to implement the ">>" redirection command that appends output to a files
 
 # Function Headers
 
