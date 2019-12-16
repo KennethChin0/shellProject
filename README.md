@@ -1,7 +1,7 @@
 # shellProject
 Kenneth Chin and Minuk Kim, System Level Programming, PD 4, Project 1
 
-make run - tests commands from TEST_COMMANDS
+make run - tests commands from TEST_COMMANDS  
 make run2 - allows user to use the shell freely
 
 **We wrote a shell interface that**
