@@ -66,27 +66,35 @@ int find_redirect(char * line){
 int output(char * line){
   char ** command = parse_args(line, ">");
   int fd;
+  char * filename = malloc(strlen(command[1]) + 1);
   char ** left = parse_args(command[0], " ");
   char ** right = parse_args(command[1], " ");
   fd = open(right[0], O_CREAT | O_WRONLY, 0644);
+  if (fd < 0){
+    printf("adfadsf\n");
+  }
   dup(STDOUT_FILENO);
-  execvp(left[0], left);
   dup2(fd, STDOUT_FILENO);
+  execvp(left[0], left);
   close(fd);
   return 1;
 }
 
 int inputt(char * line){
   char ** command = parse_args(line, "<");
+  char *filename = malloc(strlen(command[1]) + 1);
   char ** left = parse_args(command[0], " ");
   char ** right = parse_args(command[1], " ");
+  // printf("adf%sdas\n", filename);
   int fd = open(right[0], O_RDONLY, 0644);
-  int x = dup(STDOUT_FILENO);
-  dup2(fd, x);
+  dup(STDOUT_FILENO);
+  dup2(fd, 0);
   execvp(left[0], left);
-  if (errno) printf("%s\n", strerror(errno) );
+  // if (errno) printf("%s\n", strerror(errno) );
   close(fd);
+  free(filename);
   return 1;
+
 }
 int mypipe (char * line) {
   char ** command = parse_args(line, "|");
