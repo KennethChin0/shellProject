@@ -81,7 +81,6 @@ int doubleRedirect(char * line){
   char ** file1 = parse_args(right[1], " ");
   // printf("%s\n", file0[0] );
   // printf("%s\n", file1[0] );
-  // char *filename = malloc(strlen(right[0]) + 1);
   int backup = dup(STDIN_FILENO);
   int backup1 = dup(STDOUT_FILENO);
   int fd = open(file0[0], O_RDONLY, 0644);
@@ -93,7 +92,7 @@ int doubleRedirect(char * line){
   close(fd1);
   dup2(backup, STDOUT_FILENO);
   dup2(backup1, STDIN_FILENO);
-  return 5;
+  return 1;
 }
 int output(char * line){
   char ** command = parse_args(line, ">");

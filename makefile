@@ -10,6 +10,9 @@ shell.o: shell.c shell.h
 run:
 	./program < TEST_COMMANDS
 
+run2:
+	./program
+
 clean:
 	rm *.o
 	rm program

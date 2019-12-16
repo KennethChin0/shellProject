@@ -13,10 +13,12 @@ int main(){
   while(1) {
     char dir[1024];
     // gets the current directory
-    getcwd(dir, sizeof(dir));
+    // getcwd(dir, sizeof(dir));
     // printf("%s$ ", dir);
     fgets(input, sizeof(input), stdin);
     // makes the lass argument a NULL
+    getcwd(dir, sizeof(dir));
+    printf("$ %s %s", dir, input);
     if (input[strlen(input) - 1] == '\n') input[strlen(input) - 1] = '\0';
     char ** args = parse_args(input, ";");
     int i = 0;
@@ -26,7 +28,6 @@ int main(){
     // printf("%d\n",  redirect);
 
     //stout
-
     if(redirect == 1){
       int result = fork();
       if (result) {
