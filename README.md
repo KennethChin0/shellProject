@@ -16,11 +16,15 @@ make run2 - allows user to use the shell freely
 5. connects two commands to feed ouput of one command into the input of another using "|"
 
 # Extra Features
-1. Supports multiple redirections ...
-2. ..
+1. Support multiple redirections
 
-# Limitations 
+2. Show current path of directory
+
+
+# Limitations
 1. Unable to implement the ">>" redirection command that appends output to a files
+
+2. Unable to use pipe with more than two files
 
 # Function Headers
 
