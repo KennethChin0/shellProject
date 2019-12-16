@@ -14,7 +14,7 @@ int main(){
     char dir[1024];
     // gets the current directory
     getcwd(dir, sizeof(dir));
-    printf("%s$ ", dir);
+    // printf("%s$ ", dir);
     fgets(input, sizeof(input), stdin);
     // makes the lass argument a NULL
     if (input[strlen(input) - 1] == '\n') input[strlen(input) - 1] = '\0';
@@ -44,7 +44,7 @@ int main(){
           int status;
           wait(&status);
         } else {
-          printf("%d\n", inputt(args[i]) );
+           inputt(args[i]);
         }
 
     }
