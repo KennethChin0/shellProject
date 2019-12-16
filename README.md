@@ -21,11 +21,24 @@ Kenneth Chin and Minuk Kim, System Level Programming, PD 4, Project 1
 2. Unable to implement the ">>" redirection command that appends output to a files
 
 # Function Headers
-* char** strip_args(char* line)
 
-* int count(char* line, char * c)
-* char ** parse_args(char * line, char * d)
-* int find_redirect(char * line)
-* int output(char * line)
-* int inputt(char * line)
-* int mypipe (char * line)
+*  `int count(char* line, char * c)`
+  - count the number of delimiters from a given argument seperated by char c.
+* `char ** parse_args(char * line, char * d)`
+  - parses through a char pointer.
+  - returns an arrary of pointers seperated by a given delimeter.
+* `int find_redirect(char * line)`
+  - takes in input char * args and will return int based on if a certain character is present.
+  - will return 1 if '>'
+  - will return 2 if '<'
+  - will return 3 if '|'
+* `int output(char * line)`
+  - takes an input char * line and returns 1.
+  - runs stdout to a file.
+* `int inputt(char * line)`
+  - takes an input char * line and returns 1.
+  - runs stdin to a file.
+* `int mypipe (char * line)`
+  - takes char * line.
+  - parses for | character.
+  - forks and runs the necessary arguments.
