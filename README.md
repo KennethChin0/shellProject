@@ -1,4 +1,4 @@
-## shellProject
+# shellProject
 Kenneth Chin and Minuk Kim, System Level Programming, PD 4, Project 1
 
 We wrote a shell interface that
@@ -8,7 +8,7 @@ We wrote a shell interface that
 4. redirects inputs and outputs to files using ">" and "<"
 5. connects two commands to feed ouput of one command into the input of another using "|"
 
-#Function Headers
+# Function Headers
 char** strip_args(char* line):
 int count(char* line, char * c): count the number of delimiters from a given argument
 har ** parse_args(char * line, char * d): parse the line to separate the command from its arguments.
@@ -18,5 +18,5 @@ int inputt(char * line):
 int mypipe (char * line):
 
 
-#Errors
+# Errors
 1. We had a
