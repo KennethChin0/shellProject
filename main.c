@@ -17,10 +17,12 @@ int main(){
     // getcwd(dir, sizeof(dir));
     // printf("%s$ ", dir);
     fgets(input, sizeof(input), stdin);
-    // makes the lass argument a NULL
     getcwd(dir, sizeof(dir));
-    printf("%s$ ", dir);
+   printf("$ %s %s", dir, input);
+   printf("%s$ %s", dir, input);
     if (input[strlen(input) - 1] == '\n') input[strlen(input) - 1] = '\0';
+    // getcwd(dir, sizeof(dir));
+    // printf("%s$  %s", dir, input);
     char ** args = parse_args(input, ";");
     int i = 0;
     //iterates through args until it reaches the NULL
