@@ -1,3 +1,4 @@
+exit
 echo NORMAL TEST
 ls
 ls -a -l
@@ -12,7 +13,7 @@ cat wholist
 echo STDIN REDIRECT TEST
 tr a-z A-Z < wholist
 echo DOUBLE REDIRECT TEST
-tr a-z A-Z < wholist > foo
+tr a-z A-Z < wholist > foo?
 cat foo
 echo PIPE TEST
 ls | wc

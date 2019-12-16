@@ -84,12 +84,15 @@ int inputt(char * line){
   char ** command = parse_args(line, "<");
   // allocates memory for file descriptor
   char *filename = malloc(strlen(command[1]) + 1);
+  // if (find_redirect(command[1]) == 1){
+  //   printf("here\n");
+  // }
   // splits command into left and right
   char ** left = parse_args(command[0], " ");
   char ** right = parse_args(command[1], " ");
   int fd = open(right[0], O_RDONLY, 0644);// file descriptor
-  dup(STDOUT_FILENO);
-  dup2(fd, 0);
+  dup(STDIN_FILENO);
+  dup2(fd, STDIN_FILENO);
   // executes the command
   execvp(left[0], left);
   close(fd);
