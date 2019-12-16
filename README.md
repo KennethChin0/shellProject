@@ -42,3 +42,6 @@ Kenneth Chin and Minuk Kim, System Level Programming, PD 4, Project 1
   - takes char * line.
   - parses for | character.
   - forks and runs the necessary arguments.
+*  `int doubleRedirect(char * line)`
+  - takes input char * line that has double redirection
+  - runs stdin and stdout to 2 different files with the command
