@@ -52,7 +52,11 @@ char ** parse_args(char * line, char * d) { // up to size - 1 commands/args
 // search for stdout, stdin, and pipe
 int find_redirect(char * line){
   if (strstr(line, "<")) {
+    if (strstr(line, ">")) {
+      return 4;
+    }
     return 2;
+
   }
 
     if (strstr(line, ">")) {
@@ -65,6 +69,32 @@ int find_redirect(char * line){
     return 0;
 }
 
+int doubleRedirect(char * line){
+  char ** command = parse_args(line, "<");
+
+    // splits command into left and right
+  char ** left = parse_args(command[0], " ");
+  char ** right = parse_args(command[1], ">"); // file descriptor
+
+  // char *filename2 = malloc(strlen(command[1]) + 1);
+  char ** file0 = parse_args(right[0], " ");
+  char ** file1 = parse_args(right[1], " ");
+  printf("%s\n", file0[0] );
+  printf("%s\n", file1[0] );
+  // char *filename = malloc(strlen(right[0]) + 1);
+  int backup = dup(STDIN_FILENO);
+  int backup1 = dup(STDOUT_FILENO);
+  int fd = open(file0[0], O_RDONLY, 0644);
+  int fd1 = open(file1[0], O_CREAT | O_WRONLY, 0644);
+  dup2(fd, STDIN_FILENO);
+  dup2(fd1, STDOUT_FILENO);
+  // execvp(left[0], left);
+  close(fd);
+  close(fd1);
+  // dup2(backup, STDOUT_FILENO);
+  // dup2(backup1, STDIN_FILENO);
+  return 5;
+}
 int output(char * line){
   char ** command = parse_args(line, ">");
   int fd;
@@ -72,10 +102,11 @@ int output(char * line){
   char ** left = parse_args(command[0], " ");
   char ** right = parse_args(command[1], " "); // file descriptor
   fd = open(right[0], O_CREAT | O_WRONLY, 0644);
-  dup(STDOUT_FILENO);
+  int backup = dup(STDOUT_FILENO);
   dup2(fd, STDOUT_FILENO);
   // executes the command
   execvp(left[0], left);
+  dup2(backup, STDOUT_FILENO);
   close(fd);
   return 1;
 }
@@ -91,10 +122,11 @@ int inputt(char * line){
   char ** left = parse_args(command[0], " ");
   char ** right = parse_args(command[1], " ");
   int fd = open(right[0], O_RDONLY, 0644);// file descriptor
-  dup(STDIN_FILENO);
+  int backup = dup(STDIN_FILENO);
   dup2(fd, STDIN_FILENO);
   // executes the command
   execvp(left[0], left);
+  dup2(backup, STDIN_FILENO);
   close(fd);
   free(filename);
   return 1;

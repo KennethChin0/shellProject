@@ -60,6 +60,11 @@ int main(){
         }
     }
 
+    if (redirect == 4) {
+      printf("%d\n", doubleRedirect(args[i]));
+    }
+
+
     //other command
     if (redirect == 0) {
     char ** command = parse_args(args[i], " ");

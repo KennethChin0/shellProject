@@ -8,7 +8,7 @@ shell.o: shell.c shell.h
 	gcc -c -g shell.c
 
 run:
-	./program
+	./program < TEST_COMMANDS
 
 clean:
 	rm *.o

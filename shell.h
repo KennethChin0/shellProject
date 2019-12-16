@@ -22,4 +22,5 @@ int inputt(char * line);
 
 int mypipe (char * line) ;
 
+int doubleRedirect(char * line);
 // char *erase(char *p, char * c);
