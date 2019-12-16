@@ -9,16 +9,18 @@
 
 
 int main(){
-  char input[512];
+
   while(1) {
-    char dir[1024];
+    char dir[4096];
+    char input[4096];
     // gets the current directory
     // getcwd(dir, sizeof(dir));
     // printf("%s$ ", dir);
-    fgets(input, sizeof(input), stdin);
-    // makes the lass argument a NULL
     getcwd(dir, sizeof(dir));
-    printf("$ %s %s", dir, input);
+    // makes the lass argument a NULL
+    printf("%s $ ", dir);
+    fgets(input, sizeof(dir), stdin);
+    // printf("%s %s $", dir, input);
     if (input[strlen(input) - 1] == '\n') input[strlen(input) - 1] = '\0';
     char ** args = parse_args(input, ";");
     int i = 0;
