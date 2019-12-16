@@ -17,7 +17,7 @@ Kenneth Chin and Minuk Kim, System Level Programming, PD 4, Project 1
 2. ..
 
 # Limitations
-1. .
+1. When running stdin from TEST_COMMANDS, the path won't be shown. 
 2. Unable to implement the ">>" redirection command that appends output to a files
 
 # Function Headers
