@@ -61,7 +61,13 @@ int main(){
     }
 
     if (redirect == 4) {
-      printf("%d\n", doubleRedirect(args[i]));
+      int result = fork();
+      if (result) {
+          int status;
+          wait(&status);
+        } else {
+          doubleRedirect(args[i]);
+        }
     }
 
 
