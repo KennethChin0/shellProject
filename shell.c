@@ -6,16 +6,16 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include "shell.h"
-
-char** strip_args(char* line){
-  int i = 0;
-  while(line != NULL){
-    if(line[i] == '\n'){
-      line[i] == '\0';
-    }
-  }
-  return 0;
-}
+//
+// char** strip_args(char* line){
+//   int i = 0;
+//   while(line != NULL){
+//     if(line[i] == '\n'){
+//       line[i] == '\0';
+//     }
+//   }
+//   return 0;
+// }
 
 int count(char* line, char * c){ // count the number of delimiters from a given argument
   int num = 1;
@@ -51,12 +51,14 @@ char ** parse_args(char * line, char * d) { // up to size - 1 commands/args
 
 // search for stdout, stdin, and pipe
 int find_redirect(char * line){
+  if (strstr(line, "<")) {
+    return 2;
+  }
+
     if (strstr(line, ">")) {
       return 1;
     }
-    if (strstr(line, "<")) {
-      return 2;
-    }
+
     if (strstr(line, "|"))  {
       return 3;
     }
@@ -66,15 +68,13 @@ int find_redirect(char * line){
 int output(char * line){
   char ** command = parse_args(line, ">");
   int fd;
-  char * filename = malloc(strlen(command[1]) + 1);
+  // splits command into left and right
   char ** left = parse_args(command[0], " ");
-  char ** right = parse_args(command[1], " ");
+  char ** right = parse_args(command[1], " "); // file descriptor
   fd = open(right[0], O_CREAT | O_WRONLY, 0644);
-  if (fd < 0){
-    printf("adfadsf\n");
-  }
   dup(STDOUT_FILENO);
   dup2(fd, STDOUT_FILENO);
+  // executes the command
   execvp(left[0], left);
   close(fd);
   return 1;
@@ -82,15 +82,16 @@ int output(char * line){
 
 int inputt(char * line){
   char ** command = parse_args(line, "<");
+  // allocates memory for file descriptor
   char *filename = malloc(strlen(command[1]) + 1);
+  // splits command into left and right
   char ** left = parse_args(command[0], " ");
   char ** right = parse_args(command[1], " ");
-  // printf("adf%sdas\n", filename);
-  int fd = open(right[0], O_RDONLY, 0644);
+  int fd = open(right[0], O_RDONLY, 0644);// file descriptor
   dup(STDOUT_FILENO);
   dup2(fd, 0);
+  // executes the command
   execvp(left[0], left);
-  // if (errno) printf("%s\n", strerror(errno) );
   close(fd);
   free(filename);
   return 1;
@@ -98,6 +99,7 @@ int inputt(char * line){
 }
 int mypipe (char * line) {
   char ** command = parse_args(line, "|");
+  //splits line into right and left comamnds
   char ** left = parse_args(command[0], " ");
   char ** right = parse_args(command[1], " ");
   int pd[2];
@@ -106,17 +108,18 @@ int mypipe (char * line) {
   int backup2 = dup(1);
   pipe(pd);
   pid = fork();
+  //forked proccess for right side command
   if (pid){
     close(pd[1]);
     //wait(0);
     backup = dup(0);
     dup2(pd[0],0);
     execvp(right[0], right);
-
     dup2(backup,0);
     close(backup);
     close(pd[0]);
   }
+  //forked proccess for left side command
   else {
     close(pd[0]);
     backup2 = dup(1);

@@ -12,15 +12,19 @@ int main(){
   char input[512];
   while(1) {
     char dir[1024];
+    // gets the current directory
     getcwd(dir, sizeof(dir));
     printf("%s$ ", dir);
     fgets(input, sizeof(input), stdin);
+    // makes the lass argument a NULL
     if (input[strlen(input) - 1] == '\n') input[strlen(input) - 1] = '\0';
     char ** args = parse_args(input, ";");
     int i = 0;
-  while(args[i]){
+    //iterates through args until it reaches the NULL
+    while(args[i]){
     int redirect = find_redirect(args[i]);
     // printf("%d\n",  redirect);
+
     //stout
 
     if(redirect == 1){
@@ -31,20 +35,21 @@ int main(){
         } else {
           output(args[i]);
         }
-
     }
 
+    //stdin
     if (redirect == 2) {
       int result = fork();
       if (result) {
           int status;
           wait(&status);
         } else {
-          inputt(args[i]);
+          printf("%d\n", inputt(args[i]) );
         }
 
     }
 
+    //pipe
     if (redirect == 3) {
       int result = fork();
       if (result) {
@@ -55,16 +60,20 @@ int main(){
         }
     }
 
+    //other command
     if (redirect == 0) {
     char ** command = parse_args(args[i], " ");
+    //exits the program
     if (strcmp(command[0], "exit") == 0) {
       return 0;
     }
+    // runs cd
     if (strcmp(command[0], "cd") == 0) {
       if (command[2] != NULL){
         printf("Syntax error: cd <filepath> \n" );
       }
       else{
+        // enters new directory
         chdir(command[1]);
         if (errno){
           printf("%s\n", strerror(errno));
@@ -75,9 +84,11 @@ int main(){
     else {
     int result = fork();
     if (result) {
+      //parent
         int status;
         wait(&status);
       } else {
+        //runs child
         execvp(command[0], command);
         if (errno) {
           printf("%s: command not found\n", command[0]);
@@ -87,6 +98,7 @@ int main(){
     }
     // i++;
   }
+  //iterators through the ;
   i++;
 }
     free(args);

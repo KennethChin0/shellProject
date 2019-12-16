@@ -6,10 +6,9 @@
 #include <unistd.h>
 
 
-char** strip_args(char* line);
+
 
 int count(char* line, char * c);
-
 
 char **parse_args(char* line, char * delim);
 
