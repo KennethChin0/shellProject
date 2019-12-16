@@ -18,7 +18,6 @@ int main(){
     // printf("%s$ ", dir);
     fgets(input, sizeof(input), stdin);
     getcwd(dir, sizeof(dir));
-   printf("$ %s %s", dir, input);
    printf("%s$ %s", dir, input);
     if (input[strlen(input) - 1] == '\n') input[strlen(input) - 1] = '\0';
     // getcwd(dir, sizeof(dir));
